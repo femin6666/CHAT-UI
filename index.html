@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Chat - Femina</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-left">
+                <div class="avatar">👩</div>
+                <div class="contact-info">
+                    <h2>Femina</h2>
+                    <p>online</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn">📹</button>
+                <button class="icon-btn">📞</button>
+                <button class="icon-btn">⋮</button>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="messages-area" id="messagesArea">
+            <div class="message-wrapper received">
+                <div class="message-avatar">👩</div>
+                <div class="message-bubble">
+                    <div class="message-text">Hey!</div>
+                    <div class="message-time">10:30 AM</div>
+                </div>
+            </div>
+
+            <div class="message-wrapper sent">
+                <div class="message-bubble">
+                    <div class="message-text">Hi there</div>
+                    <div class="message-time">10:32 AM</div>
+                </div>
+            </div>
+
+            <div class="message-wrapper received">
+                <div class="message-avatar">👩</div>
+                <div class="message-bubble">
+                    <div class="message-text">What's up?</div>
+                    <div class="message-time">10:33 AM</div>
+                </div>
+            </div>
+
+            <div class="message-wrapper sent">
+                <div class="message-bubble">
+                    <div class="message-text">All good</div>
+                    <div class="message-time">10:35 AM</div>
+                </div>
+            </div>
+
+            <div class="message-wrapper received">
+                <div class="message-avatar">👩</div>
+                <div class="message-bubble">
+                    <div class="message-text">Coffee?</div>
+                    <div class="message-time">10:36 AM</div>
+                </div>
+            </div>
+
+            <div class="message-wrapper sent">
+                <div class="message-bubble">
+                    <div class="message-text">Sure!</div>
+                    <div class="message-time">10:37 AM</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input -->
+        <div class="input-area">
+            <button class="input-btn">😊</button>
+            <button class="input-btn">📎</button>
+            <div class="input-wrapper">
+                <input type="text" id="messageInput" placeholder="Type a message">
+            </div>
+            <button class="send-btn" id="sendBtn">➤</button>
+        </div>
+    </div>
+
+    <script>
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messagesArea = document.getElementById('messagesArea');
+
+        function getCurrentTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+            return hours + ':' + minutesStr + ' ' + ampm;
+        }
+
+        function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text) {
+                const messageWrapper = document.createElement('div');
+                messageWrapper.className = 'message-wrapper sent';
+
+                const messageBubble = document.createElement('div');
+                messageBubble.className = 'message-bubble';
+
+                const messageText = document.createElement('div');
+                messageText.className = 'message-text';
+                messageText.textContent = text;
+
+                const messageTime = document.createElement('div');
+                messageTime.className = 'message-time';
+                messageTime.textContent = getCurrentTime();
+
+                messageBubble.appendChild(messageText);
+                messageBubble.appendChild(messageTime);
+                messageWrapper.appendChild(messageBubble);
+
+                messagesArea.appendChild(messageWrapper);
+                messageInput.value = '';
+                messagesArea.scrollTop = messagesArea.scrollHeight;
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
